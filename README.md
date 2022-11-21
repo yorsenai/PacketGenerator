@@ -1,5 +1,5 @@
-# PackageGenerator
-IP, TCP, UDP and ICMP Package Generator with GUI
+# PacketGenerator
+IP, TCP, UDP and ICMP Packet Generator with GUI
 
 The PG has the following functionality:
 
@@ -24,4 +24,4 @@ The PG has the following functionality:
 • Fragmentation is possible too, so user also is able to perform attacks that require port changing.
 
 
-To start working you should start PackageGenerator.py with python, All the other .py files presented here must be in the same directory.
+To start working you should start PacketGenerator.py with python, All the other .py files presented here must be in the same directory.
