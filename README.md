@@ -1,4 +1,4 @@
-# PacketGenerator
+# Packet Generator
 IP, TCP, UDP and ICMP Packet Generator with GUI
 
 The PG has the following functionality:
