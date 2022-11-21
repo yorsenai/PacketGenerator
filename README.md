@@ -6,6 +6,7 @@ The PG has the following functionality:
 • Determination of the network cards present and the ability for the user to select the desired card.
 
 • PG provides independent formation of information of link layer packets (Ethernet 802.3):
+
     o MAC address of the sender;
     
     o MAC address of the recipient;
