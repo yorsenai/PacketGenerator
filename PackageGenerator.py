@@ -1,3 +1,6 @@
+#
+# Khalilov Ramazan, 2022, Peter the Great St.Petersburg Polytechnic University.
+#
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QRegExpValidator
 
