@@ -6,19 +6,19 @@ from PyQt5.QtWidgets import QTableWidget, QComboBox
 from PyQt5 import QtCore, QtWidgets
 
 from ChoiceDialog import LoadQueueDialog, SendDialog, CallErrorBox, comboItem
-import PackageSender as PS
+import PacketSender as PS
 
 class TableWidget(QTableWidget):
     def __init__(self, parent):
         super(TableWidget, self).__init__(1, 3, parent = parent)
-        self.packages = glob("*.P")
-        self.packages.append("-")
-        self.setHorizontalHeaderLabels(['Package', 'Amount', 'Delay'])
+        self.packets = glob("*.P")
+        self.packets.append("-")
+        self.setHorizontalHeaderLabels(['Packet', 'Amount', 'Delay'])
         self.setColumnWidth(4, 100)
         self.verticalHeader().setDefaultSectionSize(50)
         self.horizontalHeader().setDefaultSectionSize(150)
 
-        combo = comboItem(self, self.packages)
+        combo = comboItem(self, self.packets)
         self.setCellWidget(0, 0, combo)
         line = QtWidgets.QLineEdit(self)
         line.setText("0")
@@ -27,8 +27,8 @@ class TableWidget(QTableWidget):
         line.setText("0")
         self.setCellWidget(0, 2 ,line)
     
-    def GetPackages(self):
-        return self.packages
+    def GetPackets(self):
+        return self.packets
 
 
 class QueueDialog(object):
@@ -95,11 +95,11 @@ class QueueDialog(object):
         self.pushButtonSend.setText(_translate("Dialog", "SEND"))
         self.pushButtonAdd.setText(_translate("Dialog", "Add Row"))
     
-    def AddNewRow(self, _, package  = "-", amount  = "0", delay  = "0"):
+    def AddNewRow(self, _, packet  = "-", amount  = "0", delay  = "0"):
         self.tableWidget.insertRow( self.tableWidget.rowCount() )
 
-        combo = comboItem(self.tableWidget, self.tableWidget.GetPackages())
-        combo.setCurrentText(package)
+        combo = comboItem(self.tableWidget, self.tableWidget.GetPackets())
+        combo.setCurrentText(packet)
         self.tableWidget.setCellWidget(self.tableWidget.rowCount() - 1, 0, combo)
 
         line = QtWidgets.QLineEdit(self.tableWidget)
@@ -116,7 +116,7 @@ class QueueDialog(object):
             entry = {}
             widget = self.tableWidget.cellWidget(i, 0)
             if isinstance(widget, comboItem):
-                entry['package'] = widget.currentText()
+                entry['packet'] = widget.currentText()
 
             widget = self.tableWidget.cellWidget(i, 1)
             if isinstance(widget, QtWidgets.QLineEdit):
@@ -152,12 +152,12 @@ class QueueDialog(object):
             entrys = json.load(file)
         
         for elem in entrys:
-            self.AddNewRow(_ = True, package = elem.get('package', "-"),
+            self.AddNewRow(_ = True, packet = elem.get('packet', "-"),
                 amount=elem.get('amount', "0"), delay=elem.get('delay', "-"))
     
 
     def SendQueue(self):
-        Sender = PS.PackageSender()
+        Sender = PS.PacketSender()
         ifs = Sender.GetInterfaces()
 
         dialog_app = QtWidgets.QDialog()
@@ -169,7 +169,7 @@ class QueueDialog(object):
 
             widget = self.tableWidget.cellWidget(i, 0)
             if isinstance(widget, comboItem):
-                package = widget.currentText()
+                packet = widget.currentText()
 
             widget = self.tableWidget.cellWidget(i, 1)
             if isinstance(widget, QtWidgets.QLineEdit):
@@ -179,6 +179,6 @@ class QueueDialog(object):
             if isinstance(widget, QtWidgets.QLineEdit):
                 delay = widget.text()
             for _ in range(int(amount)):
-                Sender.FormPackage(filename = package)
-                Sender.SendPackage(SendWindow.GetName())
+                Sender.FormPacket(filename = packet)
+                Sender.SendPacket(SendWindow.GetName())
                 time.sleep(int(delay))

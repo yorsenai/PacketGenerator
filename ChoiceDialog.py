@@ -65,7 +65,7 @@ class LoadDialog(SuperDialog):
         super().setupUi(Dialog, items=glob("*.P"))
         _translate = QtCore.QCoreApplication.translate
 
-        self.label.setText(_translate("Dialog", "Enter package to open"))
+        self.label.setText(_translate("Dialog", "Enter packet to open"))
         self.pushButton.setText(_translate("Dialog", "Open"))
         self.pushButton.clicked.connect(lambda : self.FindFile(Dialog))
 
@@ -86,19 +86,22 @@ class SaveDialog(SuperDialog):
         super().setupUi(Dialog)
         _translate = QtCore.QCoreApplication.translate
 
-        if parameters["IP"]['Protocol'] == "TCP":
-            del parameters["UDP"]
-            del parameters["ICMP"]
-        elif parameters["IP"]['Protocol'] == "UDP":
-            del parameters["TCP"]
-            del parameters["ICMP"]
-        elif parameters["IP"]['Protocol'] == "ICMP":
-            del parameters["TCP"]
-            del parameters["UDP"]
-        else:
-            del parameters["TCP"]
-            del parameters["UDP"]
-            del parameters["ICMP"]
+        try:
+            if parameters["IP"]['Protocol'] == "TCP":
+                del parameters["UDP"]
+                del parameters["ICMP"]
+            elif parameters["IP"]['Protocol'] == "UDP":
+                del parameters["TCP"]
+                del parameters["ICMP"]
+            elif parameters["IP"]['Protocol'] == "ICMP":
+                del parameters["TCP"]
+                del parameters["UDP"]
+            else:
+                del parameters["TCP"]
+                del parameters["UDP"]
+                del parameters["ICMP"]
+        except:
+            pass
         
         self.label.setText(_translate("Dialog", "Enter name to save"))
         self.pushButton.setText(_translate("Dialog", "Save"))
