@@ -22,3 +22,6 @@ The PG has the following functionality:
 • User is able to create queues of packets (for example to perform DOS and flooding attacks).
 
 • Fragmentation is possible too, so user also is able to perform attacks that require port changing.
+
+
+To start working you should start PackageGenerator.py with python, All the other .py files presented here must be in the same directory.
