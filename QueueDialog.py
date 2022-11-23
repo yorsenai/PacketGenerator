@@ -2,8 +2,8 @@ import json
 from glob import glob
 import time
 
-from PyQt5.QtWidgets import QTableWidget, QComboBox
-from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QTableWidget
+from PyQt5 import QtCore, QtWidgets, QtGui
 
 from ChoiceDialog import LoadQueueDialog, SendDialog, CallErrorBox, comboItem
 import PacketSender as PS
@@ -35,9 +35,11 @@ class QueueDialog(object):
     def setupUi(self, Dialog, state, load):
         Dialog.setObjectName("Dialog")
         Dialog.resize(900, 600)
+
         self.tableWidget = TableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(20, 50, 700, 500))
         self.tableWidget.setObjectName("tableWidget")
+        
 
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(20, 10, 100, 30))
@@ -67,6 +69,13 @@ class QueueDialog(object):
             self.SendQueue
         )
 
+        self.pushButtonDel = QtWidgets.QPushButton(Dialog)
+        self.pushButtonDel.setGeometry(QtCore.QRect(750, 450, 120, 40))
+        self.pushButtonDel.setObjectName("pushButtonDel")
+        self.pushButtonDel.clicked.connect(lambda :
+            self.DeleteRow(_ = True)
+        )
+
 
         self.pushButtonAdd = QtWidgets.QPushButton(Dialog)
         self.pushButtonAdd.setGeometry(QtCore.QRect(750, 510, 120, 40))
@@ -93,6 +102,7 @@ class QueueDialog(object):
         self.pushButtonSave.setText(_translate("Dialog", "SAVE"))
         self.pushButtonLoad.setText(_translate("Dialog", "LOAD"))
         self.pushButtonSend.setText(_translate("Dialog", "SEND"))
+        self.pushButtonDel.setText(_translate("Dialog", "Delete Row"))
         self.pushButtonAdd.setText(_translate("Dialog", "Add Row"))
     
     def AddNewRow(self, _, packet  = "-", amount  = "0", delay  = "0"):
@@ -109,6 +119,14 @@ class QueueDialog(object):
         line = QtWidgets.QLineEdit(self.tableWidget)
         line.setText(delay)
         self.tableWidget.setCellWidget(self.tableWidget.rowCount() - 1, 2, line)
+    
+    def DeleteRow(self, _):
+        # self.tableWidget.removeRow(
+        #     self.tableWidget.rowCount()
+        # )
+        # pass
+        cnt = self.tableWidget.rowCount()
+        self.tableWidget.setRowCount(cnt-1)
     
     def SaveQueue(self):
         queue = []
