@@ -114,7 +114,7 @@ class SaveDialog(SuperDialog):
         self.result = self.lineEdit.text()
         try:
             with open(self.lineEdit.text(), "w") as file:
-                json.dump(parameters, file)
+                json.dump(parameters, file, indent = 4, separators=(',\n', ': '))
         except Exception as e:
             CallErrorBox(f'Saving Error. Exception: {e}')
             return
