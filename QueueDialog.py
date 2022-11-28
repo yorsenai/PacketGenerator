@@ -155,7 +155,7 @@ class QueueDialog(object):
                 name = self.lineEditName.text()
     
         with open(name, "w") as file:
-            json.dump(queue, file)
+            json.dump(queue, file, indent = 4, separators=(',\n', ': '))
     
     def LoadQueue(self):
         dialog_app = QtWidgets.QDialog()
